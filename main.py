@@ -8,7 +8,6 @@ from time   import time
 
 class Monkey:
     def __init__(self, name='Mike'):
-        self.ascii_lowercase = [x for x in ascii_lowercase + ' ']
         self.name = name
 
     def find_sentence(self, sentence):
@@ -21,7 +20,7 @@ class Monkey:
             self.generated_sentence_amnt += 1
             self.generated_sentence = ''
             for indx in range(self.sentence_len):
-                generated_char = choice(self.ascii_lowercase)
+                generated_char = choice(ascii_char)
                 if generated_char == self.sentence[indx]:
                     self.generated_sentence += generated_char
                 else:
@@ -70,15 +69,17 @@ def get_monkey_names():
 # ------------------------------------------------------------
 
 def main():
+    fprint('---Infinite Monkey Theorem---')
+
     monkey_nam_lst = get_monkey_names()
     if not monkey_nam_lst:
         monkey_nam_lst = [f'Mike {x}' for x in range(get_input('Amount of monkeys: ', int))]
 
     monkey_lst = [Monkey(monkey_nam_lst[x]) for x in range(len(monkey_nam_lst))]
 
-    fprint('--- Don\'t use numbers in the sentence ---')
+    fprint('- Don\'t use numbers in the sentence -')
     sentence = get_input('Sentence to find: ', str)
-    print("Fun fact: The posibility to find your unique string is approximately 1/" +  add_space_for_int(27**len(sentence)) + '\n')
+    print("Fun fact: The posibility to find your unique string is approximately 1/" +  add_space_for_int(len(ascii_char)**len(sentence)) + '\n')
 
     thread_lst = [ threading.Thread(target=monkey.find_sentence, args=(sentence,)) for monkey in monkey_lst]
     for th in thread_lst:
@@ -87,4 +88,5 @@ def main():
 # ------------------------------------------------------------
 
 if __name__ == '__main__':
+    ascii_char = [x for x in ascii_lowercase + 'åäö ']
     main()

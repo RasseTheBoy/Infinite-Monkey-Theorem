@@ -30,7 +30,10 @@ class Monkey:
                 self.end_time = time()
                 self.elapsed_time = timedelta(seconds=self.end_time-self.start_time)
                 break
+                
+        self.print_output()
 
+    def print_output(self):
         fprint(
 f'''Name: {self.name}
 Generated sentence: {self.generated_sentence}
@@ -77,8 +80,7 @@ def main():
 
     monkey_lst = [Monkey(monkey_nam_lst[x]) for x in range(len(monkey_nam_lst))]
 
-    fprint('- Don\'t use numbers in the sentence -')
-    sentence = get_input('Sentence to find: ', str)
+    sentence = get_input('Sentence to find (no numbers): ', str)
     print("Fun fact: The posibility to find your unique string is approximately 1/" +  add_space_for_int(len(ascii_char)**len(sentence)) + '\n')
 
     thread_lst = [ threading.Thread(target=monkey.find_sentence, args=(sentence,)) for monkey in monkey_lst]
